@@ -18,6 +18,7 @@ const ImageController = require('./controllers/ImageController');
 const EmailController = require('./controllers/EmailController');
 const AddressController = require('./controllers/AddressController');
 const UnitController = require('./controllers/UnitController');
+const ClientController = require('./controllers/ClientController');
 
 
 // IMAGES
@@ -54,6 +55,12 @@ router.post('/user/add-user',UserController.addUser);
 router.post('/user/users',UserController.getUsers);
 router.post('/user/edit-user',UserController.editUser);
 router.post('/user/delete-user',UserController.deleteUser);
+
+// CRUD CLIENT
+router.post('/client/add-client',ClientController.addClient);
+router.post('/client/clients',ClientController.getClientsByCompany);
+router.post('/client/edit-client',ClientController.editClient);
+router.post('/client/delete-client',ClientController.deleteClient);
 
 // AUTH
 router.post('/auth/login',AdminController.loginAdmin);
