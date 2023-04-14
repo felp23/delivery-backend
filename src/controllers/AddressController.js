@@ -8,39 +8,46 @@ const responseModel = {
 
 module.exports = {
 
-    async addUser (req, res) {
+    async addAddress (req, res) {
         const response = {...responseModel}
 
         const { 
-            userFirstName, 
-            userLastName, 
-            userEmail, 
-            userPhone,
-            userBirthdate,
-            userPasscode,
-            userLevel,
+            addressName, 
+            addressStreet, 
+            addressNumber, 
+            addressNeighborhood,
+            addressCity,
+            addressComplement,
+            addressLat,
+            addressLng,
         } = req.body;
 
         const [, affectRows] = await connection.query(`
-            INSERT INTO users VALUES (
+            INSERT INTO address VALUES (
                 DEFAULT, 
-                '${userFirstName}', 
-                '${userLastName}', 
-                '${userEmail}', 
-                '${userPhone}', 
-                '${userBirthdate}', 
-                '${userPasscode}', 
-                '${userLevel}', 
+                '${addressName}', 
+                '${addressStreet}', 
+                '${addressNumber}', 
+                '${addressNeighborhood}', 
+                '${addressCity}', 
+                '${addressComplement}', 
+                '${addressLat}', 
+                '${addressLng}', 
                 NOW()
             )
         `)
 
+        const [, address] = await connection.query(`
+            SELECT MAX(addressId) as addressId FROM address
+        `);
+
         response.success = affectRows > 0;
+        response.addressId = address[0].addressId;
 
         return res.json(response);
     },
 
-    async editUser(req, res) {
+    async editAddress(req, res) {
         const response = {...responseModel}
 
         const { 
@@ -68,7 +75,7 @@ module.exports = {
         return res.json(response);
     },
 
-    async getUsers (req, res) {
+    async getAddresses (req, res) {
         const response = {...responseModel}
 
         const [, data] = await connection.query(`
@@ -78,7 +85,7 @@ module.exports = {
         return res.json(data);
     },
 
-    async deleteUser (req, res) {
+    async deleteAddress (req, res) {
         const response = {...responseModel}
 
         const { 
@@ -90,43 +97,34 @@ module.exports = {
         `)
 
         response.success = true;
-        adminPasscode
+
         return res.json(response);
     }, 
 
-    async loginAdmin (req, res) {
+    async login (req, res) {
         console.log(req);
         const response = {...responseModel}
 
-        const { 
-            adminEmail, 
-            adminPasscode
-        } = req.body;
+        const { userEmail, userPasscode } = req.body;
 
-        const [, admin]  = await connection.query(`
-            SELECT * FROM admin 
-            WHERE adminEmail='${adminEmail}' AND adminPasscode='${adminPasscode}'
+        const [, data]  = await connection.query(`
+            SELECT * FROM users 
+            WHERE userEmail='${userEmail}' AND userPasscode='${userPasscode}'
         `)
 
-        const [, company]  = await connection.query(`
-            SELECT * FROM company 
-            WHERE companyId='${admin[0].adminCompanyId}'
-        `)
-
-        console.log('ADMIN ID: ', admin[0].adminCompanyId);
-        if (admin == 0) {
+        console.log(data);
+        if (data == 0) {
             return res.json(
                 {
                     error: true, 
-                    message:"Falha na autenticação"
+                    message:"Usuário ou senha inválidos"
                 }
             );            
         } else {
             return res.json(
                 {
                     error: false, 
-                    admin: admin[0],
-                    company: company
+                    user: data[0]
                 }
             );           
         }

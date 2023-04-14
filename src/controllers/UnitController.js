@@ -8,29 +8,25 @@ const responseModel = {
 
 module.exports = {
 
-    async addUser (req, res) {
+    async addUnit (req, res) {
         const response = {...responseModel}
 
         const { 
-            userFirstName, 
-            userLastName, 
-            userEmail, 
-            userPhone,
-            userBirthdate,
-            userPasscode,
-            userLevel,
+            unitName, 
+            unitPhone, 
+            unitEmail, 
+            unitAddressId,
+            unitCompanyId,
         } = req.body;
 
         const [, affectRows] = await connection.query(`
-            INSERT INTO users VALUES (
+            INSERT INTO unit VALUES (
                 DEFAULT, 
-                '${userFirstName}', 
-                '${userLastName}', 
-                '${userEmail}', 
-                '${userPhone}', 
-                '${userBirthdate}', 
-                '${userPasscode}', 
-                '${userLevel}', 
+                '${unitName}', 
+                '${unitPhone}', 
+                '${unitEmail}', 
+                '${unitAddressId}', 
+                '${unitCompanyId}', 
                 NOW()
             )
         `)
@@ -68,11 +64,15 @@ module.exports = {
         return res.json(response);
     },
 
-    async getUsers (req, res) {
+    async getUnitsByCompany (req, res) {
         const response = {...responseModel}
+        const { 
+            companyId
+        } = req.body;
+        console.log('COMPANY ID: ', companyId);
 
         const [, data] = await connection.query(`
-            SELECT * FROM users
+            SELECT * FROM unit WHERE unitCompanyId='${companyId}'
         `)
 
         return res.json(data);
@@ -90,43 +90,34 @@ module.exports = {
         `)
 
         response.success = true;
-        adminPasscode
+
         return res.json(response);
     }, 
 
-    async loginAdmin (req, res) {
+    async login (req, res) {
         console.log(req);
         const response = {...responseModel}
 
-        const { 
-            adminEmail, 
-            adminPasscode
-        } = req.body;
+        const { userEmail, userPasscode } = req.body;
 
-        const [, admin]  = await connection.query(`
-            SELECT * FROM admin 
-            WHERE adminEmail='${adminEmail}' AND adminPasscode='${adminPasscode}'
+        const [, data]  = await connection.query(`
+            SELECT * FROM users 
+            WHERE userEmail='${userEmail}' AND userPasscode='${userPasscode}'
         `)
 
-        const [, company]  = await connection.query(`
-            SELECT * FROM company 
-            WHERE companyId='${admin[0].adminCompanyId}'
-        `)
-
-        console.log('ADMIN ID: ', admin[0].adminCompanyId);
-        if (admin == 0) {
+        console.log(data);
+        if (data == 0) {
             return res.json(
                 {
                     error: true, 
-                    message:"Falha na autenticação"
+                    message:"Usuário ou senha inválidos"
                 }
             );            
         } else {
             return res.json(
                 {
                     error: false, 
-                    admin: admin[0],
-                    company: company
+                    user: data[0]
                 }
             );           
         }

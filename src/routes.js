@@ -16,6 +16,8 @@ const AdminController = require('./controllers/AdminController');
 const UserController = require('./controllers/UserController');
 const ImageController = require('./controllers/ImageController');
 const EmailController = require('./controllers/EmailController');
+const AddressController = require('./controllers/AddressController');
+const UnitController = require('./controllers/UnitController');
 
 
 // IMAGES
@@ -30,10 +32,20 @@ router.post('/image/upload-image',upload.single('imagem'), (req, res) => {
 });
 
 // CRUD ADMIN
-router.post('/user/add-admin',UserController.addUser);
-router.post('/user/admins',UserController.getUsers);
-router.post('/user/edit-admin',UserController.editUser);
-router.post('/user/delete-admin',UserController.deleteUser);
+// router.post('/admin/add-admin',AddressController.addUser);
+// router.post('/admin/admins',AddressController.getUsers);
+// router.post('/admin/edit-admin',AddressController.editUser);
+// router.post('/admin/delete-admin',AddressController.deleteUser);
+
+// CRUD ADDRESS
+router.post('/address/add-address',AddressController.addAddress);
+// router.post('/address/addresses',AddressController.getUsers);
+// router.post('/address/edit-address',AddressController.editUser);
+// router.post('/address/delete-address',AddressController.deleteUser);
+
+// CRUD UNIT
+router.post('/unit/add-unit',UnitController.addUnit);
+router.post('/unit/units-by-company',UnitController.getUnitsByCompany);
 
 // CRUD USER
 router.post('/user/add-user',UserController.addUser);
