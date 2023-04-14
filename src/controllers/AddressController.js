@@ -75,14 +75,21 @@ module.exports = {
         return res.json(response);
     },
 
-    async getAddresses (req, res) {
+    async getAddressesById (req, res) {
         const response = {...responseModel}
 
+        const { 
+            addressId,
+        } = req.body;
+
         const [, data] = await connection.query(`
-            SELECT * FROM users
+            SELECT * FROM address WHERE addressId='${addressId}'
         `)
 
-        return res.json(data);
+        response.success = true;
+        response.address = data
+
+        return res.json(response);
     },
 
     async deleteAddress (req, res) {

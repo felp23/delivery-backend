@@ -39,13 +39,14 @@ router.post('/image/upload-image',upload.single('imagem'), (req, res) => {
 
 // CRUD ADDRESS
 router.post('/address/add-address',AddressController.addAddress);
-// router.post('/address/addresses',AddressController.getUsers);
+router.post('/address/address-by-id',AddressController.getAddressesById);
 // router.post('/address/edit-address',AddressController.editUser);
 // router.post('/address/delete-address',AddressController.deleteUser);
 
 // CRUD UNIT
 router.post('/unit/add-unit',UnitController.addUnit);
 router.post('/unit/units-by-company',UnitController.getUnitsByCompany);
+router.post('/unit/edit-unit',UnitController.editUnit);
 
 // CRUD USER
 router.post('/user/add-user',UserController.addUser);

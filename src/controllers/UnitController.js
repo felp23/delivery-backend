@@ -36,26 +36,22 @@ module.exports = {
         return res.json(response);
     },
 
-    async editUser(req, res) {
+    async editUnit(req, res) {
         const response = {...responseModel}
 
         const { 
-            userId,
-            userFirstName,
-            userLastName,
-            userEmail,
-            userPhone,
-            userBirthdate
+            unitId,
+            unitName,
+            unitPhone,
+            unitEmail
         } = req.body;
 
         const [, data] = await connection.query(`
-            UPDATE users 
-            SET userFirstName='${userFirstName}', 
-                userLastName='${userLastName}' , 
-                userEmail='${userEmail}' , 
-                userPhone='${userPhone}' , 
-                userBirthdate='${userBirthdate}' 
-            WHERE userId='${userId}';
+            UPDATE unit 
+            SET unitName='${unitName}' , 
+                unitPhone='${unitPhone}' , 
+                unitEmail='${unitEmail}'
+            WHERE unitId='${unitId}';
         `)
 
         response.success = true;
