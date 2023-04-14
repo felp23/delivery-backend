@@ -18,6 +18,7 @@ module.exports = {
             addressNeighborhood,
             addressCity,
             addressComplement,
+            addressZipCode,
             addressLat,
             addressLng,
         } = req.body;
@@ -31,6 +32,7 @@ module.exports = {
                 '${addressNeighborhood}', 
                 '${addressCity}', 
                 '${addressComplement}', 
+                '${addressZipCode}', 
                 '${addressLat}', 
                 '${addressLng}', 
                 NOW()
@@ -51,22 +53,30 @@ module.exports = {
         const response = {...responseModel}
 
         const { 
-            userId,
-            userFirstName,
-            userLastName,
-            userEmail,
-            userPhone,
-            userBirthdate
+            addressId,
+            addressName,
+            addressStreet,
+            addressNumber,
+            addressNeighborhood,
+            addressCity,
+            addressComplement,
+            addressZipCode,
+            addressLat,
+            addressLng
         } = req.body;
 
         const [, data] = await connection.query(`
-            UPDATE users 
-            SET userFirstName='${userFirstName}', 
-                userLastName='${userLastName}' , 
-                userEmail='${userEmail}' , 
-                userPhone='${userPhone}' , 
-                userBirthdate='${userBirthdate}' 
-            WHERE userId='${userId}';
+            UPDATE address 
+            SET addressName='${addressName}', 
+                addressStreet='${addressStreet}' , 
+                addressNumber='${addressNumber}' , 
+                addressNeighborhood='${addressNeighborhood}', 
+                addressCity='${addressCity}',
+                addressComplement='${addressComplement}',
+                addressZipCode='${addressZipCode}',
+                addressLat='${addressLat}',
+                addressLng='${addressLng}'
+            WHERE addressId='${addressId}'
         `)
 
         response.success = true;

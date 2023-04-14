@@ -40,7 +40,7 @@ router.post('/image/upload-image',upload.single('imagem'), (req, res) => {
 // CRUD ADDRESS
 router.post('/address/add-address',AddressController.addAddress);
 router.post('/address/address-by-id',AddressController.getAddressesById);
-// router.post('/address/edit-address',AddressController.editUser);
+router.post('/address/edit-address',AddressController.editAddress);
 // router.post('/address/delete-address',AddressController.deleteUser);
 
 // CRUD UNIT
