@@ -47,6 +47,7 @@ router.post('/address/edit-address',AddressController.editAddress);
 router.post('/unit/add-unit',UnitController.addUnit);
 router.post('/unit/units-by-company',UnitController.getUnitsByCompany);
 router.post('/unit/edit-unit',UnitController.editUnit);
+router.post('/unit/delete-unit',UnitController.deleteUnit);
 
 // CRUD USER
 router.post('/user/add-user',UserController.addUser);

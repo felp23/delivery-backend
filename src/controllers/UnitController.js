@@ -74,15 +74,20 @@ module.exports = {
         return res.json(data);
     },
 
-    async deleteUser (req, res) {
+    async deleteUnit (req, res) {
         const response = {...responseModel}
 
         const { 
-            userId, 
+            unitId, 
+            unitAddressId
         } = req.body;
 
-        const [, data] = await connection.query(`
-            DELETE FROM users WHERE userId='${userId}'
+        const [, unit] = await connection.query(`
+            DELETE FROM unit WHERE unitId='${unitId}'
+        `)
+
+        const [, address] = await connection.query(`
+            DELETE FROM address WHERE addressId='${unitAddressId}'
         `)
 
         response.success = true;
