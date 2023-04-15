@@ -54,7 +54,7 @@ router.post('/unit/delete-unit',UnitController.deleteUnit);
 
 // CRUD USER
 router.post('/user/add-user',UserController.addUser);
-router.post('/user/users',UserController.getUsers);
+router.post('/user/users-by-company',UserController.getUsersByCompany);
 router.post('/user/edit-user',UserController.editUser);
 router.post('/user/delete-user',UserController.deleteUser);
 

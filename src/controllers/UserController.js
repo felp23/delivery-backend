@@ -14,23 +14,27 @@ module.exports = {
         const { 
             userFirstName, 
             userLastName, 
-            userEmail, 
+            userDocument, 
             userPhone,
-            userBirthdate,
+            userEmail,
             userPasscode,
-            userLevel,
+            userAddressId,
+            userCompanyId,
+            userUnitId,
         } = req.body;
 
         const [, affectRows] = await connection.query(`
-            INSERT INTO users VALUES (
+            INSERT INTO user VALUES (
                 DEFAULT, 
                 '${userFirstName}', 
                 '${userLastName}', 
-                '${userEmail}', 
+                '${userDocument}', 
                 '${userPhone}', 
-                '${userBirthdate}', 
+                '${userEmail}', 
                 '${userPasscode}', 
-                '${userLevel}', 
+                '${userAddressId}', 
+                '${userCompanyId}', 
+                '${userUnitId}', 
                 NOW()
             )
         `)
@@ -47,18 +51,26 @@ module.exports = {
             userId,
             userFirstName,
             userLastName,
-            userEmail,
+            userDocument,
             userPhone,
-            userBirthdate
+            userEmail,
+            userPasscode,
+            userAddressId,
+            userCompanyId,
+            userUnitId
         } = req.body;
 
         const [, data] = await connection.query(`
-            UPDATE users 
+            UPDATE user 
             SET userFirstName='${userFirstName}', 
-                userLastName='${userLastName}' , 
+                userLastName='${userLastName}', 
+                userDocument='${userDocument}', 
+                userPhone='${userPhone}', 
                 userEmail='${userEmail}' , 
-                userPhone='${userPhone}' , 
-                userBirthdate='${userBirthdate}' 
+                userPasscode='${userPasscode}', 
+                userAddressId='${userAddressId}', 
+                userCompanyId='${userCompanyId}', 
+                userUnitId='${userUnitId}' 
             WHERE userId='${userId}';
         `)
 
@@ -68,11 +80,15 @@ module.exports = {
         return res.json(response);
     },
 
-    async getUsers (req, res) {
+    async getUsersByCompany (req, res) {
         const response = {...responseModel}
 
+        const { 
+            companyId,
+        } = req.body;
+
         const [, data] = await connection.query(`
-            SELECT * FROM users
+            SELECT * FROM user WHERE userCompanyId='${companyId}'
         `)
 
         return res.json(data);
@@ -86,7 +102,7 @@ module.exports = {
         } = req.body;
 
         const [, data] = await connection.query(`
-            DELETE FROM users WHERE userId='${userId}'
+            DELETE FROM user WHERE userId='${userId}'
         `)
 
         response.success = true;
