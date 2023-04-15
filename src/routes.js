@@ -20,6 +20,7 @@ const AddressController = require('./controllers/AddressController');
 const UnitController = require('./controllers/UnitController');
 const ClientController = require('./controllers/ClientController');
 const DriverController = require('./controllers/DriverController');
+const VehicleController = require('./controllers/VehicleController');
 
 
 // IMAGES
@@ -68,6 +69,12 @@ router.post('/driver/add-driver',DriverController.addDriver);
 router.post('/driver/drivers-by-company',DriverController.getDriversByCompany);
 router.post('/driver/edit-driver',DriverController.editDriver);
 router.post('/driver/delete-driver',DriverController.deleteDriver);
+
+// CRUD VEHICLE
+router.post('/vehicle/add-vehicle',VehicleController.addVehicle);
+router.post('/vehicle/vehicles-by-driver',VehicleController.getVehiclesByDriver);
+router.post('/vehicle/edit-vehicle',VehicleController.editVehicle);
+router.post('/vehicle/delete-vehicle',VehicleController.deleteVehicle);
 
 // AUTH
 router.post('/auth/login',AdminController.loginAdmin);
