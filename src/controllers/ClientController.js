@@ -92,7 +92,7 @@ module.exports = {
         } = req.body;
 
         const [, data] = await connection.query(`
-            SELECT * FROM users WHERE clientCompanyId='${companyId}'
+            SELECT * FROM client WHERE clientCompanyId='${companyId}'
         `)
 
         return res.json(data);

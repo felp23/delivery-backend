@@ -58,7 +58,7 @@ router.post('/user/delete-user',UserController.deleteUser);
 
 // CRUD CLIENT
 router.post('/client/add-client',ClientController.addClient);
-router.post('/client/clients',ClientController.getClientsByCompany);
+router.post('/client/clients-by-company',ClientController.getClientsByCompany);
 router.post('/client/edit-client',ClientController.editClient);
 router.post('/client/delete-client',ClientController.deleteClient);
 
