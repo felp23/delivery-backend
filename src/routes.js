@@ -19,6 +19,7 @@ const EmailController = require('./controllers/EmailController');
 const AddressController = require('./controllers/AddressController');
 const UnitController = require('./controllers/UnitController');
 const ClientController = require('./controllers/ClientController');
+const DriverController = require('./controllers/DriverController');
 
 
 // IMAGES
@@ -61,6 +62,12 @@ router.post('/client/add-client',ClientController.addClient);
 router.post('/client/clients-by-company',ClientController.getClientsByCompany);
 router.post('/client/edit-client',ClientController.editClient);
 router.post('/client/delete-client',ClientController.deleteClient);
+
+// CRUD DRIVER
+router.post('/driver/add-driver',DriverController.addDriver);
+router.post('/driver/drivers-by-company',DriverController.getDriversByCompany);
+router.post('/driver/edit-driver',DriverController.editDriver);
+router.post('/driver/delete-driver',DriverController.deleteDriver);
 
 // AUTH
 router.post('/auth/login',AdminController.loginAdmin);
